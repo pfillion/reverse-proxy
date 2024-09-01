@@ -59,7 +59,7 @@ build: ## Build the image form Dockerfile
 		-f Dockerfile .
 
 
-push: ## Push the image to a registry
+docker-push: ## Push the image to a registry
 ifdef DOCKER_USERNAME
 	echo "$(DOCKER_PASSWORD)" | docker login -u "$(DOCKER_USERNAME)" --password-stdin
 endif
