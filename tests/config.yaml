@@ -38,7 +38,7 @@ metadataTest:
     - key: MOBYCRON_ENABLED
       value: true
   entrypoint: ["entrypoint.sh"]
-  cmd: []
+  cmd: ["nginx", "-g", "daemon off;"]
   workdir: ""
 
 fileExistenceTests:

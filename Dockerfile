@@ -32,3 +32,5 @@ ENV LEGO_MODE=staging
 ENV MOBYCRON_ENABLED=true
 
 ENTRYPOINT [ "entrypoint.sh" ]
+
+CMD ["nginx", "-g", "daemon off;"]
