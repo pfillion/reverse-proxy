@@ -28,9 +28,7 @@ RUN apk add --update --no-cache \
 COPY rootfs /
 COPY --from=mobycron /usr/bin/mobycron /usr/bin
 
-ENV LEGO_MODE=test
+ENV LEGO_MODE=staging
 ENV MOBYCRON_ENABLED=true
 
 ENTRYPOINT [ "entrypoint.sh" ]
-
-CMD ["nginx", "-g", "daemon off;"]

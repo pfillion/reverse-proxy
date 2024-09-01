@@ -1,0 +1,68 @@
+schemaVersion: "2.0.0"
+
+metadataTest:
+  labels:
+    - key: 'org.opencontainers.image.created'
+      value: '.*'
+      isRegex: true
+    - key: 'org.opencontainers.image.url'
+      value: '.*'
+      isRegex: true  
+    - key: 'org.opencontainers.image.source'
+      value: '.*'
+      isRegex: true    
+    - key: 'org.opencontainers.image.version'
+      value: '.*'
+      isRegex: true
+    - key: 'org.opencontainers.image.revision'
+      value: '.*'
+      isRegex: true  
+    - key: 'org.opencontainers.image.vendor'
+      value: '.*'
+      isRegex: true 
+    - key: 'org.opencontainers.image.title'
+      value: '.*'
+      isRegex: true
+    - key: 'org.opencontainers.image.description'
+      value: '.*'
+      isRegex: true  
+    - key: 'org.opencontainers.image.authors'
+      value: '.*'
+      isRegex: true 
+    - key: 'org.opencontainers.image.licenses'
+      value: '.*'
+      isRegex: true
+  envVars:
+    - key: LEGO_MODE
+      value: staging
+    - key: MOBYCRON_ENABLED
+      value: true
+  entrypoint: ["entrypoint.sh"]
+  cmd: []
+  workdir: ""
+
+fileExistenceTests:
+- name: 'mobycron'
+  path: '/usr/bin/mobycron'
+  shouldExist: true
+  permissions: '-rwxr-xr-x'
+  uid: 0
+  gid: 0
+- name: 'entrypoint'
+  path: '/usr/local/bin/entrypoint.sh'
+  shouldExist: true
+  permissions: '-rwxr-xr-x'
+  uid: 0
+  gid: 0
+  isExecutableBy: 'group'
+commandTests:
+- name: "lego is functional"
+  command: "lego"
+  args: ["--version"]
+  expectedOutput: ["lego version \\d+\\.\\d+\\.\\d+"]
+  exitCode: 0
+- name: "libressl is functional"
+  command: "libressl"
+  args: ["version"]
+  expectedOutput: ["LibreSSL \\d+\\.\\d+\\.\\d+"]
+  exitCode: 0

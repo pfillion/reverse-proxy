@@ -19,6 +19,9 @@ DATE                = $(shell date -u +"%Y-%m-%dT%H:%M:%S")
 COMMIT             := $(shell git rev-parse HEAD)
 AUTHOR             := $(firstword $(subst @, ,$(shell git show --format="%aE" $(COMMIT))))
 
+# Bats parameters
+TEST_FOLDER ?= $(shell pwd)/tests
+
 # Docker parameters
 ROOT_FOLDER=$(shell pwd)
 NS ?= pfillion
@@ -37,7 +40,13 @@ version: ## Show all versionning infos
 	@echo COMMIT="$(COMMIT)"
 	@echo AUTHOR="$(AUTHOR)"
 
+docker-test: ## Run docker container tests
+	container-structure-test test --image $(NS)/$(IMAGE_NAME):$(VERSION) --config $(TEST_FOLDER)/config.yaml
+	
+test: docker-test ## Run all tests
+
 build: ## Build the image form Dockerfile
+	chmod 755 -R ./rootfs/
 	docker build \
 		--build-arg DATE=$(DATE) \
 		--build-arg CURRENT_VERSION_MICRO=$(CURRENT_VERSION_MICRO) \
@@ -48,6 +57,7 @@ build: ## Build the image form Dockerfile
 		-t $(NS)/$(IMAGE_NAME):$(CURRENT_VERSION_MAJOR) \
 		-t $(NS)/$(IMAGE_NAME):latest \
 		-f Dockerfile .
+
 
 push: ## Push the image to a registry
 ifdef DOCKER_USERNAME
@@ -63,6 +73,3 @@ shell: ## Run shell command in the container
 
 run: ## Run shell command in the container
 	docker run --rm --name $(CONTAINER_NAME)-$(CONTAINER_INSTANCE) $(PORTS) $(VOLUMES) $(ENV) $(NS)/$(IMAGE_NAME):$(CURRENT_VERSION_MICRO)
-
-test: ## Run all tests
-	container-structure-test test --image $(NS)/$(IMAGE_NAME):$(CURRENT_VERSION_MICRO) --config tests/config.yaml
