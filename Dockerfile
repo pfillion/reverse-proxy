@@ -23,14 +23,13 @@ LABEL \
 RUN apk add --update --no-cache \
     lego \
     libressl \
-    nginx-mod-stream
+    nginx-mod-stream \
+    libc6-compat \
+    supervisor
 
 COPY rootfs /
 COPY --from=mobycron /usr/bin/mobycron /usr/bin
 
 ENV LEGO_MODE=staging
-ENV MOBYCRON_ENABLED=true
 
-ENTRYPOINT [ "entrypoint.sh" ]
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["supervisord"]
