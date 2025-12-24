@@ -1,6 +1,6 @@
 # reverse-proxy
 
-[![Build Status](https://drone.pfillion.com/api/badges/pfillion/reverse-proxy/status.svg?branch=master)](https://drone.pfillion.com/pfillion/reverse-proxy)
+[![status-badge](https://woodpecker.pfillion.com/api/badges/8/status.svg)](https://woodpecker.pfillion.com/repos/8)
 ![GitHub](https://img.shields.io/github/license/pfillion/reverse-proxy)
 [![GitHub last commit](https://img.shields.io/github/last-commit/pfillion/reverse-proxy?logo=github)](https://github.com/pfillion/reverse-proxy "GitHub projet")
 
@@ -53,7 +53,7 @@ You can mount directly a file or use docker configuration to schedule all job li
 ]
 ```
 
-This config will schedule cron job for renew certificate and copy them in the ```/.lego``` folder by default. All yopu have to do is configure you nginx proxy to use them.
+This config will schedule cron job for renew certificate and copy them in the ```/.lego``` folder by default. All you have to do is configure you nginx proxy to use them.
 
 * /etc/nginx/nginx.conf
 

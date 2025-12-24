@@ -3,6 +3,10 @@ SHELL = /bin/sh
 .PHONY: help
 .DEFAULT_GOAL := help
 
+ifeq ($(MODE_LOCAL),true)
+	GIT_CONFIG_GLOBAL := $(shell git config --global --add safe.directory /main/src > /dev/null)
+endif
+
 # Version
 VERSION            := 1.27.5-alpine
 VERSION_PARTS      := $(subst ., ,$(VERSION))
@@ -45,6 +49,9 @@ docker-test: ## Run docker container tests
 	
 test: docker-test ## Run all tests
 
+test-ci: ## Run CI pipeline locally
+	woodpecker-cli exec --local --repo-trusted-volumes=true --env=MODE_LOCAL=true
+
 build: ## Build the image form Dockerfile
 	chmod 755 -R ./rootfs/
 	docker build \
@@ -61,7 +68,7 @@ build: ## Build the image form Dockerfile
 
 docker-push: ## Push the image to a registry
 ifdef DOCKER_USERNAME
-	echo "$(DOCKER_PASSWORD)" | docker login -u "$(DOCKER_USERNAME)" --password-stdin
+	@echo "$(DOCKER_PASSWORD)" | docker login -u "$(DOCKER_USERNAME)" --password-stdin
 endif
 	docker push $(NS)/$(IMAGE_NAME):$(CURRENT_VERSION_MICRO)
 	docker push $(NS)/$(IMAGE_NAME):$(CURRENT_VERSION_MINOR)

@@ -1,9 +1,10 @@
-ARG CURRENT_VERSION_MICRO
+ARG CURRENT_VERSION_MICRO=latest
 
 FROM pfillion/mobycron:latest AS mobycron
 FROM nginx:$CURRENT_VERSION_MICRO
 
 # Build-time metadata as defined at https://github.com/opencontainers/image-spec
+ARG CURRENT_VERSION_MICRO
 ARG DATE
 ARG COMMIT
 ARG AUTHOR
