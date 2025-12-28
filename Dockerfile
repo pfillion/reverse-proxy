@@ -33,4 +33,4 @@ COPY --from=mobycron /usr/bin/mobycron /usr/bin
 
 ENV LEGO_MODE=staging
 
-CMD ["/usr/bin/supervisord","-c","/etc/supervisor.d/supervisord.ini"]
+CMD ["supervisord","-c","/etc/supervisord.conf"]
