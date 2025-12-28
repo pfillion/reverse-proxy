@@ -36,7 +36,7 @@ metadataTest:
     - key: LEGO_MODE
       value: staging
   entrypoint: ["/docker-entrypoint.sh"]
-  cmd: ["/usr/bin/supervisord","-c","/etc/supervisor.d/supervisord.ini"]
+  cmd: ["supervisord","-c","/etc/supervisord.conf"]
   workdir: ""
 
 fileExistenceTests:
